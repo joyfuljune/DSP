@@ -63,6 +63,10 @@
 ## 频谱幅度修正原理
 如前文所说，修正频谱幅度可以简单实现修正共振峰的目的，达到维持原声音质的效果。
 假设我们有原始音频orig2.wav，可以看到他的共振峰谱图如下，Fundamental标记了基频所在位置，F标记了前2个共振峰的位置。
+
+<a href="https://github.com/joyfuljune/DSP/blob/main/projects/P3/audio/orig2.wav" target="_blank">audio!</a>
+
+
 |![image](https://user-images.githubusercontent.com/88413945/183807010-db578c2e-1669-4536-9c99-296f708600ab.png)|图7. A 原始音频 [orig2.wav](https://github.com/joyfuljune/DSP/blob/main/projects/P3/audio/orig2.wav)|
 | - | - |
 
