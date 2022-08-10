@@ -63,13 +63,17 @@
 ## 频谱幅度修正原理
 如前文所说，修正频谱幅度可以简单实现修正共振峰的目的，达到维持原声音质的效果。
 假设我们有原始音频orig2.wav，可以看到他的共振峰谱图如下，Fundamental标记了基频所在位置，F标记了前2个共振峰的位置。
-|![image](https://user-images.githubusercontent.com/88413945/183807010-db578c2e-1669-4536-9c99-296f708600ab.png)||
+|![image](https://user-images.githubusercontent.com/88413945/183807010-db578c2e-1669-4536-9c99-296f708600ab.png)|图7. A 原始音频 [orig2.wav](https://github.com/joyfuljune/DSP/blob/main/projects/P3/audio/orig2.wav)|
 | - | - |
+
 假若我们升高了音调，基频和共振峰的位置同时向右偏移，可以看到共振峰的波形相比原始要宽，修正共振峰使得波形和原始一致。
-|![image](https://user-images.githubusercontent.com/88413945/183807035-bde0ca7c-455e-49ef-ae3f-c039dbf986ee.png)||
+
+|![image](https://user-images.githubusercontent.com/88413945/183807035-bde0ca7c-455e-49ef-ae3f-c039dbf986ee.png)|图7. B 变调音频 [orig2_shift.wav](https://github.com/joyfuljune/DSP/blob/main/projects/P3/audio/orig2_shift.wav)|
 | - | - |
+
 最终的目的是达到下图，基频向右升高，共振峰包络不变。
-|![image](https://user-images.githubusercontent.com/88413945/183807052-a7b04b31-8d42-4e37-ab21-6ee26c992fe9.png)||
+
+|![image](https://user-images.githubusercontent.com/88413945/183807052-a7b04b31-8d42-4e37-ab21-6ee26c992fe9.png)|图7. C 修正音频 [orig2_corr.wav](https://github.com/joyfuljune/DSP/blob/main/projects/P3/audio/orig2_corr.wav)|
 | - | - |
 
 在算法中，我们的思路是，
