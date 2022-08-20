@@ -1,4 +1,4 @@
-# <div align='center'> Lab 4 – IIR滤波器设计 </div>
+# <div align='center'> Lab 3 – IIR滤波器设计 </div>
 
 #### 目录
 - [实验目的](#aim)
