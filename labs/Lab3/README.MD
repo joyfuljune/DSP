@@ -1,5 +1,18 @@
 # <div align='center'> Lab 4 – IIR滤波器设计 </div>
 
+#### 目录
+- [实验目的](@#1)
+- []()
+- []()
+- []()
+- []()
+- []()
+- []()
+- []()
+- []()
+- []()
+
+<a href=1></a>
 ## 实验目的
 在本实验中，我们将使用MATLAB对IIR滤波器进行双线性变换法设计。
 
@@ -30,18 +43,18 @@ $$y\left[n\right]=\sum_{k=1}^{L}{a\left[k\right]y\left[n-k\right]+\sum_{m=0}^{M}
 在基于模拟低通滤波器Ha(s)的转换的IIR数字低通滤波器H(z)的设计中，首先使用表2给出的公式估计Ha(s)的滤波器阶数：其中ρ为下表中的Elliptic滤波器需要的参数。
 ![image](https://user-images.githubusercontent.com/88413945/185746078-2682d326-cba9-42a6-9276-645128fb9d7e.png)
 
-$$k=\sqrt{1-{\frac{\Omega_p}{\Omega_s}}^2}， ρ0=1-k21+k，ρ=ρ0+2ρ05+15ρ09+150ρ013$$
+$$k=\sqrt{1-{\frac{\Omega_p}{\Omega_s}}^2}， ρ0=1-k21+k，ρ=ρ_0+2ρ_0^5+15ρ_0^9+150ρ_0^{13}$$
 
 MATLAB提供buttord, cheb1ord, cheb2ord, 以及ellipord函数用于计算阶次。
-这些函数需要用到的输入参数有：
-Wp = 通带边界频率 (rad/s)
-Ws = 阻带边界频率 (rad/s)
-Rp = 最大通带衰减 (dB)
-Rs = 最小阻带衰减 (dB)
-’s’ = 模拟滤波器参数，固定格式
-调用以上函数会返回
-N = 滤波器阶次
-Wn = 截止频率（rad）
+这些函数需要用到的输入参数有：  
+Wp = 通带边界频率 (rad/s)  
+Ws = 阻带边界频率 (rad/s)  
+Rp = 最大通带衰减 (dB)  
+Rs = 最小阻带衰减 (dB)  
+’s’ = 模拟滤波器参数，固定格式  
+调用以上函数会返回  
+N = 滤波器阶次  
+Wn = 截止频率（rad）  
 
 #### 例题
 假设我们想要设计一个模拟巴特沃斯滤波器使用butterord函数，已知通带边界频率是500π，阻带截止频率是2500π，通带最小衰减为1dB，阻带最小衰减为40dB，求最低滤波器阶次。
@@ -92,7 +105,7 @@ Wn =
 
 $$H\left(z\right)=H_a{\left(s\right)|}_{s=\alpha\left(\frac{1-z^{-1}}{1+z^{-1}}\right)}$$
 
-MATLAB提供函数bilinear用于计算以上替换。注意该替换方法会引起频率翘曲，为了避免这一效应，需要将模拟和数字域频率做一交换。 $\Omega=\alpha tan\frac{\omega T}{2}$ ， $ω=αtan-1ΩT2$ 
+MATLAB提供函数bilinear用于计算以上替换。注意该替换方法会引起频率翘曲，为了避免这一效应，需要将模拟和数字域频率做一交换。 $\Omega=\alpha tan\frac{\omega T}{2}$ ， $ω=αtan^{-1}\frac{ΩT}{2}$ 
 
 ## 练习
 <ol>
