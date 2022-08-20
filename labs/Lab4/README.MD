@@ -11,16 +11,24 @@
  式中y[n]是滤波后数据，b[m]是系统函数中分子系数。
  
  #### 例题
- 假设h[n]是某理想低通滤波器系统单位脉冲响应，假设截止频率ωc=π/4，这个滤波器是否是物理可实现的？我们在MATLAB中怎么把以下函数图画出？
+ 假设h[n]是某理想低通滤波器系统单位脉冲响应，假设截止频率ωc=π/4，这个滤波器是否是物理可实现的？我们在MATLAB中怎么把以下函数图画出？  
  
-$$ H\left(e^{j \omega}\right)=\left\{\begin{array}{cc}$$
+$$\begin{equation}
+H(e^{j \omega}) = 
+   \begin{Bmatrix} 
+   1 & |\omega|\leq |\omega_c|  \\
+   0 & |\omega_c| \leq \omega \leq \pi
+   \end{Bmatrix} 
+\end{equation}$$  
+ 
+ $$\begin{equation}
+h[n] = 
+   \begin{Bmatrix} 
+   \frac{\omega_c}{\pi} & n=0  \\
+   \frac{\omega_c}{\pi}\frac{sin \omega_c n}{\omega_c n} & {n \ne 0}
+   \end{Bmatrix} 
+\end{equation}$$  
 
-$$ 1 & |\omega| \leq\left|\omega_{c}\right| \\
-0 & \left|\omega_{c}\right| \leq \omega \leq \pi
-\end{array}\right.$$  
- 
-  $$h\left[n\right]=\left\{\begin{matrix}\frac{\omega_c}{\pi}&n=0\\\frac{\omega_c}{\pi}\frac{{sin\omega}_cn}{\omega_cn}&n\neq0\\\end{matrix}\right.$$  
- 
  解：假设h[n]在范围（-100,100）区间。使用sinc（）函数画图。注意 $sinc\left(x\right)=\frac{sinx\pi}{x\pi}$ 
  
  ```matlab
@@ -34,20 +42,21 @@ Hw(abs(w)<=1/4)=1;
 ```
 ![image](https://user-images.githubusercontent.com/88413945/185742769-fc7357d1-a8ba-4daf-948a-9019ef11334d.png)
 ![image](https://user-images.githubusercontent.com/88413945/185742770-cd09261a-afce-4df7-bda6-fa17989f0b13.png)
+
 这个滤波器无法物理实现因为h[n]是非因果的。我们无法访问负时间单位的数据。
 
 ### 因果性
 很明显，理想的低通滤波器不是因果的，h[n]≠0,n<0。 一种可能的解决方案是在h[n]中引入延迟n0并且强制在n<n0时h[n]=0以满足因果关系。因果性对滤波器的设计有着重要影响：
 - 除了频率上有限的一组点外， $H(e^{jω})$ 的频率响应不能为零。
-- 幅度响应| H(ejω)| 在任何有限的频率范围内都不是恒定的，所以从通带到阻带的转换不是瞬时的。
-- $H(e^{jω})$的实部和虚部相互依赖，因此$\|H(e^{jω})\|$和∠$H(e^{jω})$不能任意选择。
+- 幅度响应 $|H(e^{jω})|$ 在任何有限的频率范围内都不是恒定的，所以从通带到阻带的转换不是瞬时的。
+- $H(e^{jω})$的实部和虚部相互依赖，因此 $\|H(e^{jω})\|$ 和∠ $H(e^{jω})$ 不能任意选择。
 一般低通滤波器幅度响应如下图所示
 ![image](https://user-images.githubusercontent.com/88413945/185742829-76baf20e-6c6e-4739-b400-79a148dedd30.png)
 
 ### 线性相位
 如果系统单位脉冲响应关于中心点具有对称性则称其具有广义线性相位（GLP）。即满足
- $h\left[n\right]\rightarrowH\left(e^{j\omega}\right)=A\left(\omega\right)e^{j\phi\left(\omega\right)}，$ 
- $\phi\left(\omega\right)=-\tau\omega\$ 或者 $-τω+π2，τ=N-12=M2 $ 
+ $h\left[n\right]\rightarrow H\left(e^{j\omega}\right)=A\left(\omega\right)e^{j\phi\left(\omega\right)}，$ 
+ $\phi\left(\omega\right)=-\tau\omega\$ 或者 $-τω+π/2，τ=\frac{N-1}{2}=\frac{M}{2} $   
 N是长度，M是最高阶次。
 对于这样的滤波器，滤波信号的相位将随频率ω线性变化。 相位延迟或群延迟将是恒等的常数。
 
@@ -66,12 +75,24 @@ freqz(h);
 - Type IV : 奇对称h[n] = −h[M − n], 0 ≤ n ≤ M	N是偶数，M是奇数，Hd(0) = 0
 
 ### 窗函数法
-在该方法中，我们从给定的频率响应Hd(ejω)开始并确定相应的单位脉冲响应hd[n]。Hd(ejω)和hd[n]通过以下傅立叶变换关系相关联：
+在该方法中，我们从给定的频率响应Hd(ejω)开始并确定相应的单位脉冲响应hd[n]。Hd(ejω)和hd[n]通过以下傅立叶变换关系相关联  
+
 $$ H\left(e^{j\omega}\right)=\sum_{n=0}^{\infty}{h_d\left[n\right]e^{-j\omega n}}$$
+
 $$ h_d\left[n\right]=\frac{1}{2\pi}\int_{-\pi}^{\pi}{H_d\left(e^{j\omega}\right)e^{j\omega n}d\omega} $$
-上式中单位脉冲响应hd[n]是无限长的，必须进行截短，比如选择区间n=N-1，以产生长度为N的FIR滤波器。截断hd[n ]到长度N相当于将hd[n]乘以长度为N的矩形窗口，表达式如下：
-$$ w\left[n\right]=\left\{\begin{matrix}1&n=0,1,\ldots,N-1\\0&else\\\end{matrix}\right. $$
+
+上式中单位脉冲响应hd[n]是无限长的，必须进行截短，比如选择区间n=N-1，以产生长度为N的FIR滤波器。截断hd[n ]到长度N相当于将hd[n]乘以长度为N的矩形窗口，表达式如下：  
+
+$$\begin{equation}
+w[n] = 
+   \begin{Bmatrix} 
+   1 & n=0,1,\ldots,N-1  \\
+   0 & else
+   \end{Bmatrix} 
+\end{equation}$$  
+
 w[n]所对应的傅里叶变换，即其频率响应为：
+
 $$ W\left(\omega\right)=\frac{\sin{\left(\frac{\omega N}{2}\right)}}{\sin{\left(\frac{\omega}{2}\right)}} $$
 
 #### 例题
@@ -89,9 +110,10 @@ legend('N = 31','N = 121');
 ![image](https://user-images.githubusercontent.com/88413945/185742978-f4343d1f-a1e8-446b-b7eb-2dd360af19fb.png)  
 可以看出N=131的图像其主瓣宽度小于N=31的情况
 在将hd[n]截断成长度为N的FIR滤波器设计中，矩形窗自身的特性对频率响应中产生重要影响。回忆在时域中乘以窗口函数等效于频域中的卷积。随着N增加，W(ω)主瓣变窄，另一方面，W(ω)的旁瓣引发了振铃效应，为了避免该效应，可以使用下表中其他类型的窗函数：
+
 ![image](https://user-images.githubusercontent.com/88413945/185742983-2ac13121-5984-4f04-bcb2-20c9d5813f7c.png)
 
-MATLAB可以绘制汉明，布莱克曼和汉宁窗的幅度和相位响应。分别使用窗口长度N = 31和121画图，观察结果并对比矩形窗。Matlab有几个窗口函数。你可以在命令行输入help window来查看这些函数。另外，Matlab还有几个设计过滤器的功能，函数fir1可用于设计M阶FIR数字滤波器。 请尝试以下代码
+MATLAB可以绘制汉明，布莱克曼和汉宁窗的幅度和相位响应。分别使用窗口长度N = 31和121画图，观察结果并对比矩形窗。Matlab有几个窗口函数。你可以在命令行输入help window来查看这些函数。另外，Matlab还有几个设计过滤器的功能，函数fir1可用于设计M阶FIR数字滤波器。 请尝试以下代码  
 ```matlab
 help fir1
 h = fir1(31,1/2,'low');
@@ -105,9 +127,8 @@ freqz(h);
 
 ## 练习
 <ol>
-  <li>已知一个长度为32的FIR线性相位滤波器单位脉冲响应表达式为 
-    $$ \left\{h_n\right\}_0^{31}=\frac{1}{4}sinc\left[\frac{\pi}{4}\left(\frac{n-31}{2}\right)\right]\left[0.54-0.46\cos{\left(\frac{2\pi n}{31}\right)}\right] $$
-    截止频率 $ωc=π/4$ 
+  <li>已知一个长度为32的FIR线性相位滤波器单位脉冲响应表达式为
+  
   <ol>
     <li>使用fir1函数设计该滤波器（提示：自学fir1函数的使用方法，你会发现不需要手动输入上述公式即可进行滤波器的设计）</li>
     <li>画出幅度相位谱，将结果与理想的LPF进行对比，通带波动和阻带衰减分别是多少dB？过度带宽为多少？</li>
@@ -115,14 +136,13 @@ freqz(h);
   </ol>
   </li>
   
-  <li>给定 `phdist.mat` 文件，其中包含了2组变量和一个加噪后的信号，使用load读取文件，如果载入无误则在命令行窗口中输入 `who得到以下结果
-    <code>\>\>who</code>
-    ```matlab
+  <li>给定<b>phdist.mat</b>文件，其中包含了2组变量和一个加噪后的信号，使用load读取文件，如果载入无误则在命令行窗口中输入who得到以下结果
+  ```python
     Your variables are:
-a1 a3 b2 xnoise
-a2 b1 b3 
+    a1 a3 b2 xnoise
+    a2 b1 b3 
     ```
-    变量a1到a3表示和b1到b3分别表示的是三个数字滤波器系数系数向量，freqz和filter函数都可能用到。xnoise是一个包含有高频噪音的语音信号。原始的语音信号可以通过读取 `orig.mat` 文件获得，以x命名。
+    变量a1到a3表示和b1到b3分别表示的是三个数字滤波器系数系数向量，freqz和filter函数都可能用到。xnoise是一个包含有高频噪音的语音信号。原始的语音信号可以通过读取 **orig.mat** 文件获得，以x命名。
     <ol>
       <li>使用freqz函数计算0<ω<π区间内1024点DFT的结果。将三个数字滤波器频响的幅度谱分别画出。假设对同一信号进行滤波，哪两个滤波器可能会得到相似的结果?</li>
       <li>将三个数字滤波器的相位图分别画出，表明次序，使用angle函数会在-π到π区间进行绘图，但是你会发现结果中出现的是折线，因为频率产生弯曲（wrap），为了得到更加清晰的图像你可以unwrap，例如H是你得到的频率响应，omega是你的频率，那么画出相位图可以由语句plot(omega/pi,unwrap(angle(H)))实现。哪两个滤波器可能会得到相似的结果？</li>
@@ -133,6 +153,8 @@ a2 b1 b3
       <li>对yn1到yn3作8192点DFT，结果分别保存为Yn1到Yn3，画出幅度响应图，分析结果。</li>
     </ol>
   </li>
+</ol>
+  
   
 
     
