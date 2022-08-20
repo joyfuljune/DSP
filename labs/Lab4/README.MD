@@ -1,4 +1,4 @@
-# <div align = 'center'> Lab 3 – FIR滤波器设计 </div>
+# <div align = 'center'> Lab 4 – FIR滤波器设计 </div>
 
 #### 目录
 - [实验目的](@实验目的)
