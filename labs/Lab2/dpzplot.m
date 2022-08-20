@@ -5,9 +5,9 @@ function dpzplot(b,a)
 la = length(a);
 lb = length(b);
 if(la>lb)
-b = [b zeros(1,la-lb)];
+  b = [b zeros(1,la-lb)];
 elseif (lb > la)
-a = [a zeros(1,lb-la)];
+  a = [a zeros(1,lb-la)];
 end
 ps = roots(a);
 zs = roots(b);  mx = max(abs([ps' zs' 0.95])) + 0.5;
@@ -26,9 +26,8 @@ plot(real(zs),imag(zs),'ko','markersize',10);
 numz=sum(abs(zs)==0);
 nump=sum(abs(ps)==0);
 if numz > 1
-text(-0.1,-0.1,num2str(numz));
+  text(-0.1,-0.1,num2str(numz));
 elseif nump>1
-text(-0.1,-0.1,num2str(nump));
+  text(-0.1,-0.1,num2str(nump));
 end
 hold off	
-function y = diffeqn(a,x,yn1)
