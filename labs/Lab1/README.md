@@ -7,4 +7,6 @@
 
 ### DTFT
 对于离散时间信号（DT）求其频域表达，使用DTFT，也就是离散时间傅里叶变换。此时的信号是一个离散的非周期的实数或复数序列。离散时间信号x[n]的DTFT由下式给出
-X(e^j\omega)=\sum_(-\infty)^\infty\of\begin x[n] e^(-jωn) 〗
+
+
+$X(e^{j\omega})=\sum_{-\infty}^{\infty}\{x\left[n\right]e^{-j\omega n}}$
