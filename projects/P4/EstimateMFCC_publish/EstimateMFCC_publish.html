@@ -1,0 +1,314 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>EstimateMFCC_publish</title><meta name="generator" content="MATLAB 9.12"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2022-08-17"><meta name="DC.source" content="EstimateMFCC_publish.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">&#20934;&#22791;</a></li><li><a href="#2">&#31532;&#19968;&#27493;</a></li><li><a href="#3">&#31532;&#20108;&#27493;</a></li><li><a href="#4">&#31532;&#19977;&#27493;</a></li><li><a href="#5">&#31532;&#22235;&#27493;</a></li><li><a href="#6">&#31532;&#20116;&#27493;</a></li><li><a href="#7">&#38468;&#21152;&#27493;&#39588;&#65292;&#21319;&#20498;&#35889;&#24179;&#28369;&#36755;&#20986;</a></li><li><a href="#8">&#38468;&#21152;&#27493;&#39588;&#65292;&#35745;&#31639;&#19968;&#38454;&#21644;&#20108;&#38454;&#24046;&#20998;</a></li><li><a href="#9">&#36755;&#20986;</a></li></ul></div><h2 id="1">&#20934;&#22791;</h2><pre class="codeinput">clear, clc, close <span class="string">all</span>
+<span class="comment">% &#39044;&#20808;&#23450;&#20041;&#22909;&#24120;&#25968;&#21464;&#37327;</span>
+[x,fs] = audioread(<span class="string">'female1.wav'</span>);
+winLength = .025*fs;
+inc = .01*fs;
+xLength = length(x);
+
+<span class="comment">% &#30011;&#22270;</span>
+figure;plot(x); title(<span class="string">'&#21407;&#22987;&#35821;&#38899;&#20449;&#21495;'</span>)
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_01.png" alt=""> <h2 id="2">&#31532;&#19968;&#27493;</h2><pre class="codeinput"><span class="comment">%&#39044;&#21152;&#37325;</span>
+x = filter([1 -0.97],1,x);
+
+<span class="comment">% &#20998;&#24103;</span>
+Frames = floor((xLength-winLength)/inc)+1;
+xMat = zeros(winLength, Frames);
+<span class="keyword">for</span> f = 1:Frames
+    xMat(:, f) = x((f-1)*inc+1:(f-1)*inc+winLength);
+<span class="keyword">end</span>
+
+<span class="comment">% &#21152;&#31383;</span>
+xHannWin = xMat.*hann(winLength, <span class="string">'periodic'</span>);
+
+<span class="comment">% &#30011;&#22270;</span>
+figure;
+subplot(311); plot(x(1:winLength)), title([<span class="string">'&#31532;&#19968;&#24103;&#35821;&#38899;&#20449;&#21495;&#65292;&#38271;&#24230;'</span>, num2str(winLength),<span class="string">'&#20010;&#26679;&#26412;'</span>]);
+subplot(312); plot(x(1:winLength)), title(<span class="string">'&#31532;&#19968;&#24103;&#35821;&#38899;&#20449;&#21495;&#21152;&#37325;&#39640;&#39057;&#21518;'</span>);
+subplot(313); plot(xHannWin(1:winLength)), title(<span class="string">'&#31532;&#19968;&#24103;&#35821;&#38899;&#20449;&#21495;&#21152;&#31383;&#21518;'</span>);
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_02.png" alt=""> <h2 id="3">&#31532;&#20108;&#27493;</h2><pre class="codeinput">Nfft = 2048;
+X = fft(xHannWin, Nfft);
+XPower = 1/Nfft*abs(X(1:Nfft/2+1, :)).^2;
+<span class="comment">% XPower = 1/Nfft*abs(X).^2;</span>
+
+<span class="comment">% &#30011;&#22270;</span>
+figure;
+plot(XPower(1, :)), title(<span class="string">'&#31532;&#19968;&#24103;&#21151;&#29575;&#35889;'</span>)
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_03.png" alt=""> <h2 id="4">&#31532;&#19977;&#27493;</h2><p>a &#24314;&#31435;&#26757;&#23572;&#19977;&#35282;&#28388;&#27874;&#22120;&#32452;&#65292;300Hz&#20026;&#26368;&#20302;&#39057;&#65292;fs/2Hz&#20026;&#26368;&#39640;&#39057;&#65292;&#24314;&#31435;32&#20010;&#19977;&#35282;&#28388;&#27874;</p><pre class="codeinput">MelOrd = 32;
+MelLowerF = 2595*log10(1+0/700);
+MelUpperF = 2595*log10(1+(fs/2)/700);
+MelFreq = linspace(MelLowerF, MelUpperF, MelOrd+2);
+Freq = 700*(10.^(MelFreq/2595)-1);
+FreqBins = floor(Freq/fs*(Nfft+1));
+FreqBins(FreqBins==0) = 1;
+Hm = zeros(MelOrd, Nfft/2+1);
+<span class="keyword">for</span> k = 2:MelOrd+2-1
+    prev = FreqBins(k-1);
+    mid = FreqBins(k);
+    post = FreqBins(k+1);
+<span class="comment">%     for i = prev:mid</span>
+<span class="comment">%         if i == 0, i = i+1; end</span>
+<span class="comment">%         Hm(k, i) = (i-prev)/(mid-prev);</span>
+<span class="comment">%     end</span>
+<span class="comment">%     for i = mid:post</span>
+<span class="comment">%         Hm(k, i) = (post-i)/(post-mid);</span>
+<span class="comment">%     end</span>
+<span class="comment">%</span>
+    Hm(k-1, prev:mid) = linspace(0,1, mid-prev+1);
+    Hm(k-1, mid:post) = linspace(1,0, post-mid+1);
+<span class="keyword">end</span>
+
+<span class="comment">% b</span>
+<span class="comment">% &#23558;&#21151;&#29575;&#35889;&#21644;&#26757;&#23572;&#28388;&#27874;&#22120;&#32452;&#30456;&#20056;&#65292;&#27599;&#19968;&#32452;&#28388;&#27874;&#22120;&#20197;&#19968;&#20010;&#27714;&#21644;&#33021;&#37327;&#20540;&#36827;&#34892;&#34920;&#31034;</span>
+Energy = Hm*XPower; <span class="comment">% &#22823;&#23567;&#20026;&#12304;MelOrd, Frames&#12305;&#65292;&#27599;&#19968;&#21015;&#26159;&#19968;&#32452;&#28388;&#27874;&#22120;&#30340;&#30456;&#20056;&#32467;&#26524;</span>
+Energy = max(Energy, eps);
+
+<span class="comment">% &#30011;&#22270;</span>
+figure;
+<span class="keyword">for</span> i = 1:MelOrd
+    plot(Hm(i, :)); hold <span class="string">on</span>
+<span class="keyword">end</span>
+title(<span class="string">'mfcc bank 32 &#32452;'</span>)
+hold <span class="string">off</span>
+
+figure;
+plot(Energy(1, :)), title(<span class="string">'&#31532;&#19968;&#32452;&#33021;&#37327;'</span>)
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_04.png" alt=""> <img vspace="5" hspace="5" src="EstimateMFCC_publish_05.png" alt=""> <h2 id="5">&#31532;&#22235;&#27493;</h2><p>&#27714;&#23545;&#25968;&#33021;&#37327;</p><pre class="codeinput">LogEnergy = log10(Energy);
+
+<span class="comment">% &#30011;&#22270;</span>
+figure;
+plot(LogEnergy(1, :)), title(<span class="string">'&#31532;&#19968;&#32452;&#23545;&#25968;&#33021;&#37327;'</span>)
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_06.png" alt=""> <h2 id="6">&#31532;&#20116;&#27493;</h2><p>&#35745;&#31639;DCT</p><pre class="codeinput">preserveOrd = 13;
+DCTEnergy = dct(LogEnergy);
+mfcc = DCTEnergy(2:preserveOrd+1, :);
+
+<span class="comment">% &#30011;&#22270;</span>
+figure;
+plot(mfcc(1, :)), title(<span class="string">'&#31532;&#19968;&#32452;&#20498;&#35889;&#31995;&#25968;'</span>)
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_07.png" alt=""> <h2 id="7">&#38468;&#21152;&#27493;&#39588;&#65292;&#21319;&#20498;&#35889;&#24179;&#28369;&#36755;&#20986;</h2><pre class="codeinput">L = 22;
+lift = 1+L/2*sin(pi*(1:preserveOrd)/L);
+liftRep = repmat(lift, Frames, 1);
+mfccLift = mfcc.*liftRep';
+
+<span class="comment">% &#30011;&#22270;</span>
+figure;
+subplot(211), plot(lift); title(<span class="string">'&#21319;&#20498;&#35889;&#20989;&#25968;'</span>)
+subplot(212), plot(mfccLift(1, :)); title(<span class="string">'&#31532;&#19968;&#32452;&#21319;&#20498;&#35889;&#21518;&#31995;&#25968;'</span>)
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_08.png" alt=""> <h2 id="8">&#38468;&#21152;&#27493;&#39588;&#65292;&#35745;&#31639;&#19968;&#38454;&#21644;&#20108;&#38454;&#24046;&#20998;</h2><pre class="codeinput">M = 2;
+b = M:-1:-M;
+filt = b./(2*sum((1:M).^2));
+<span class="comment">% mfccPad = [mfccLift, repmat(mfccLift(:, end), 1, 2*M)];</span>
+<span class="comment">% delta = zeros(size(mfccLift));</span>
+<span class="comment">% for i = 1:Frames</span>
+<span class="comment">%     delta(:, i) = mfccPad(:, i:i+2*M)*filt;</span>
+<span class="comment">% end</span>
+delta = filter(filt', 1,mfccLift',[],1);
+deltadelta = filter(filt,1,delta,[],1);
+
+figure;
+subplot(211); plot(delta(:, 1)); title(<span class="string">'&#19968;&#38454;&#24046;&#20998;'</span>);
+subplot(212); plot(deltadelta(:, 1)); title(<span class="string">'&#20108;&#38454;&#24046;&#20998;'</span>);
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_09.png" alt=""> <h2 id="9">&#36755;&#20986;</h2><pre class="codeinput">mfcc3 = [mfccLift; delta'; deltadelta'];
+figure;
+subplot(211); plot(x(1:winLength)), title(<span class="string">'&#31532;&#19968;&#24103;&#21407;&#22987;&#20449;&#21495;'</span>)
+subplot(212); plot(mfcc3(1, :)), title(<span class="string">'&#31532;&#19968;&#32452;&#23436;&#20840;&#31995;&#25968;'</span>)
+</pre><img vspace="5" hspace="5" src="EstimateMFCC_publish_10.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2022a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% 准备
+clear, clc, close all
+% 预先定义好常数变量
+[x,fs] = audioread('female1.wav');
+winLength = .025*fs;
+inc = .01*fs;
+xLength = length(x);
+
+% 画图
+figure;plot(x); title('原始语音信号')
+
+%% 第一步
+%预加重
+x = filter([1 -0.97],1,x);
+
+% 分帧
+Frames = floor((xLength-winLength)/inc)+1;
+xMat = zeros(winLength, Frames);
+for f = 1:Frames
+    xMat(:, f) = x((f-1)*inc+1:(f-1)*inc+winLength);
+end
+
+% 加窗
+xHannWin = xMat.*hann(winLength, 'periodic');
+
+% 画图
+figure; 
+subplot(311); plot(x(1:winLength)), title(['第一帧语音信号，长度', num2str(winLength),'个样本']);
+subplot(312); plot(x(1:winLength)), title('第一帧语音信号加重高频后');
+subplot(313); plot(xHannWin(1:winLength)), title('第一帧语音信号加窗后');
+
+%% 第二步
+Nfft = 2048;
+X = fft(xHannWin, Nfft);
+XPower = 1/Nfft*abs(X(1:Nfft/2+1, :)).^2;
+% XPower = 1/Nfft*abs(X).^2;
+
+% 画图
+figure; 
+plot(XPower(1, :)), title('第一帧功率谱')
+%% 第三步
+% a
+% 建立梅尔三角滤波器组，300Hz为最低频，fs/2Hz为最高频，建立32个三角滤波
+MelOrd = 32;
+MelLowerF = 2595*log10(1+0/700);
+MelUpperF = 2595*log10(1+(fs/2)/700);
+MelFreq = linspace(MelLowerF, MelUpperF, MelOrd+2);
+Freq = 700*(10.^(MelFreq/2595)-1);
+FreqBins = floor(Freq/fs*(Nfft+1));
+FreqBins(FreqBins==0) = 1;
+Hm = zeros(MelOrd, Nfft/2+1);
+for k = 2:MelOrd+2-1
+    prev = FreqBins(k-1);
+    mid = FreqBins(k);
+    post = FreqBins(k+1);
+%     for i = prev:mid
+%         if i == 0, i = i+1; end
+%         Hm(k, i) = (i-prev)/(mid-prev);
+%     end
+%     for i = mid:post
+%         Hm(k, i) = (post-i)/(post-mid);
+%     end
+%     
+    Hm(k-1, prev:mid) = linspace(0,1, mid-prev+1);
+    Hm(k-1, mid:post) = linspace(1,0, post-mid+1);
+end
+
+% b
+% 将功率谱和梅尔滤波器组相乘，每一组滤波器以一个求和能量值进行表示
+Energy = Hm*XPower; % 大小为【MelOrd, Frames】，每一列是一组滤波器的相乘结果
+Energy = max(Energy, eps);
+
+% 画图
+figure;
+for i = 1:MelOrd
+    plot(Hm(i, :)); hold on
+end
+title('mfcc bank 32 组')
+hold off
+
+figure;
+plot(Energy(1, :)), title('第一组能量')
+%% 第四步
+% 求对数能量
+LogEnergy = log10(Energy);
+
+% 画图
+figure;
+plot(LogEnergy(1, :)), title('第一组对数能量')  
+%% 第五步
+% 计算DCT
+preserveOrd = 13;
+DCTEnergy = dct(LogEnergy);
+mfcc = DCTEnergy(2:preserveOrd+1, :);
+
+% 画图
+figure;
+plot(mfcc(1, :)), title('第一组倒谱系数')
+%% 附加步骤，升倒谱平滑输出
+L = 22;
+lift = 1+L/2*sin(pi*(1:preserveOrd)/L);
+liftRep = repmat(lift, Frames, 1);
+mfccLift = mfcc.*liftRep';
+
+% 画图
+figure;
+subplot(211), plot(lift); title('升倒谱函数')
+subplot(212), plot(mfccLift(1, :)); title('第一组升倒谱后系数')
+%% 附加步骤，计算一阶和二阶差分
+M = 2;
+b = M:-1:-M;
+filt = b./(2*sum((1:M).^2));
+% mfccPad = [mfccLift, repmat(mfccLift(:, end), 1, 2*M)];
+% delta = zeros(size(mfccLift));
+% for i = 1:Frames
+%     delta(:, i) = mfccPad(:, i:i+2*M)*filt;
+% end
+delta = filter(filt', 1,mfccLift',[],1);
+deltadelta = filter(filt,1,delta,[],1);
+
+figure;
+subplot(211); plot(delta(:, 1)); title('一阶差分');
+subplot(212); plot(deltadelta(:, 1)); title('二阶差分');
+%% 输出
+mfcc3 = [mfccLift; delta'; deltadelta'];
+figure;
+subplot(211); plot(x(1:winLength)), title('第一帧原始信号')
+subplot(212); plot(mfcc3(1, :)), title('第一组完全系数')
+##### SOURCE END #####
+--></body></html>
