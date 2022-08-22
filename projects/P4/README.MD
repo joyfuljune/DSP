@@ -52,17 +52,21 @@ x ̂[i,m]=c(m)\sum_{n=0}^{C-1}E[i,n]cos\left(\frac{\left(n+\frac{1}{2}\right)\pi
 $$
 
 其中，  
-$$c_m=\begin{Bmatrix}
-\sqrt{\frac{1}{C}} & m=0 \\
-\sqrt{\frac{2}{C}} & m\ne0
-\end{Bmatrix}$$  
+
+$$
+c_m=\begin{Bmatrix}
+\sqrt{\frac{1}{N}} & m=0\\
+\sqrt{\frac{2}{N}} & m\ne0
+\end{Bmatrix}
+$$
+
 C表示MFCC滤波器组数。E[i，m]表示第i帧滤波器组能量。
 
 - 微分和加速度系数
 
 MFCC倒谱系数通常被称为静态特征，因为它们只包含来自给定帧的信息。 可以通过计算倒谱系数的一阶和二阶导数来获得有关信号时间动态的额外信息。 一阶导数称为 delta 系数，二阶导数称为 delta-delta 系数。 Delta 系数说明语速，而 delta-delta 系数提供类似于语音加速的信息。我们将一阶和二阶导数和MFCC倒谱系数合并可以丰富特征向量。
 
-$$d_t=\frac{\sum_{n=1}^N n(c_{t+n}-c_{t-n} )}{2\sum_{n=1}^N n^2}$$
+$$d_t=\frac{\sum_{n=1}^{N} {n(c_{t+n}-c_{t-n})}}{2\sum_{n=1}^{N} {n^2}}$$
 
 N一般取值为2。
 
