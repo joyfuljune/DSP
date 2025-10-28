@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/Administrator/Downloads/exam_fixed.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTFT/DFS/Z变换综合测验</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><style type="text/css" id="operaUserStyle"></style>
+    <script id="MathJax-script" async="" src="./DTFT_DFS_Z变换综合测验_files/tex-mml-chtml.js.下载"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* 开始界面样式 */
+        .start-screen {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .info-form {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px 0;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .exam-info {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .exam-info h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .exam-info ul {
+            margin-left: 20px;
+            color: #34495e;
+            line-height: 1.8;
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            height: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s;
+        }
+
+        .question-card.answered {
+            border-color: #3498db;
+            background: #e8f4f8;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            background: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .question-category {
+            background: #95a5a6;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+        }
+
+        .question-category.dtft {
+            background: #e74c3c;
+        }
+
+        .question-category.dfs {
+            background: #f39c12;
+        }
+
+        .question-category.ztransform {
+            background: #27ae60;
+        }
+
+        .question-category.system {
+            background: #8e44ad;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            background: #f8f9fa;
+            border-color: #3498db;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: #e8f4f8;
+            border-color: #3498db;
+            border-width: 3px;
+        }
+
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            border-width: 3px;
+        }
+
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            border-width: 3px;
+        }
+
+        .option-label {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.correct .option-label {
+            background: #28a745;
+        }
+
+        .option.incorrect .option-label {
+            background: #dc3545;
+        }
+
+        .option-text {
+            flex: 1;
+            color: #2c3e50;
+        }
+
+        .explanation {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .explanation h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .explanation p {
+            color: #856404;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-next {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .btn-prev {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-finish {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-start {
+            background: #3498db;
+            color: white;
+            padding: 15px 50px;
+            font-size: 1.2em;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            display: none;
+        }
+
+        .result-panel.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .student-info {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .student-info p {
+            margin: 5px 0;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .result-message {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .result-details {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .result-details td {
+            padding: 10px;
+            font-size: 1.1em;
+        }
+
+        .review-section {
+            margin-top: 30px;
+        }
+
+        .review-question {
+            background: white;
+            color: #2c3e50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .review-status {
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .review-status.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .review-status.wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .statistics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            color: #2c3e50;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+<style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+<body>
+    <div class="container">
+        <h1>DTFT/DFS/Z变换综合测验</h1>
+        <p class="subtitle">南京工业大学浦江学院 | 信号与系统课程</p>
+
+        <!-- 开始界面 -->
+        <div id="startScreen" class="start-screen">
+            <div class="exam-info">
+                <h3>📋 考试说明</h3>
+                <ul>
+                    <li>共20道选择题，涵盖DTFT、DFS、Z变换等核心知识点</li>
+                    <li>每题1分，总分20分</li>
+                    <li>点击选项选择答案,可以随时修改</li>
+                    <li>提交后可查看详细解析和正确答案</li>
+                </ul>
+            </div>
+
+            <div class="info-form">
+                <h3 style="color: #2c3e50; margin-bottom: 20px;">请填写你的信息</h3>
+                <div class="form-group">
+                    <label for="studentId">学号 <span style="color: red;">*</span></label>
+                    <input type="text" id="studentId" placeholder="请输入学号" required="">
+                </div>
+                <div class="form-group">
+                    <label for="studentName">姓名 <span style="color: red;">*</span></label>
+                    <input type="text" id="studentName" placeholder="请输入姓名" required="">
+                </div>
+                <button class="btn-start" onclick="startExam()">开始考试</button>
+            </div>
+        </div>
+
+        <!-- 考试界面 -->
+        <div id="examScreen" style="display: none;">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar">0/20 已完成</div>
+            </div>
+
+            <div id="questionContainer"></div>
+
+            <div class="button-group">
+                <button class="btn-prev" id="prevBtn" onclick="previousQuestion()">⬅️ 上一题</button>
+                <button class="btn-submit" id="submitBtn" onclick="submitAnswer()">✓ 提交答案</button>
+                <button class="btn-next" id="nextBtn" onclick="nextQuestion()">下一题 ➡️</button>
+                <button class="btn-finish" id="finishBtn" onclick="finishExam()" style="display: none;">🏁 完成考试</button>
+            </div>
+        </div>
+
+        <!-- 结果界面 -->
+        <div class="result-panel" id="resultPanel">
+            <h2>考试完成！</h2>
+            
+            <div class="student-info">
+                <p><strong>学号：</strong><span id="resultStudentId"></span></p>
+                <p><strong>姓名：</strong><span id="resultStudentName"></span></p>
+            </div>
+
+            <div class="result-score" id="resultScore">0/20</div>
+            <div class="result-message" id="resultMessage"></div>
+            
+            <div class="statistics">
+                <div class="stat-card">
+                    <div class="stat-label">正确率</div>
+                    <div class="stat-value" id="accuracyRate">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">DTFT题目</div>
+                    <div class="stat-value" id="dtftScore">0/5</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">DFS题目</div>
+                    <div class="stat-value" id="dfsScore">0/4</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Z变换题目</div>
+                    <div class="stat-value" id="ztScore">0/6</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">系统分析题目</div>
+                    <div class="stat-value" id="systemScore">0/5</div>
+                </div>
+            </div>
+
+            <button class="btn-submit" onclick="showReview()" style="margin-top: 30px;">📝 查看详细解析</button>
+            <button class="btn-next" onclick="location.reload()" style="margin-top: 10px;">🔄 重新开始</button>
+        </div>
+
+        <div id="reviewSection" style="display: none;">
+            <h2 style="margin: 30px 0 20px 0; color: #2c3e50;">📚 答题回顾与解析</h2>
+            <div id="reviewContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const originalQuestions = [
+            {
+                id: 1,
+                category: 'dtft',
+                categoryName: 'DTFT',
+                question: '离散时间傅里叶变换(DTFT)的周期是多少？',
+                options: [
+                    '$\\pi$',
+                    '$2\\pi$',
+                    '$\\pi/2$',
+                    '$4\\pi$'
+                ],
+                correct: 1,
+                explanation: 'DTFT的定义为 $X(e^{j\\omega}) = \\sum_{n=-\\infty}^{\\infty} x[n]e^{-j\\omega n}$。由于 $e^{j\\omega n}$ 关于 $\\omega$ 是以 $2\\pi$ 为周期的，因此DTFT也是以 $2\\pi$ 为周期的函数。'
+            },
+            {
+                id: 2,
+                category: 'dtft',
+                categoryName: 'DTFT',
+                question: '如果序列 $x[n]$ 是实序列，则其DTFT $X(e^{j\\omega})$ 具有什么性质？',
+                options: [
+                    '共轭对称性：$X(e^{j\\omega}) = X^*(e^{-j\\omega})$',
+                    '共轭反对称性：$X(e^{j\\omega}) = -X^*(e^{-j\\omega})$',
+                    '周期为 $\\pi$',
+                    '仅在 $[0, \\pi]$ 有定义'
+                ],
+                correct: 0,
+                explanation: '对于实序列，DTFT具有共轭对称性（Hermitian对称性）。这意味着幅度谱是偶函数 $|X(e^{j\\omega})| = |X(e^{-j\\omega})|$，相位谱是奇函数 $\\angle X(e^{j\\omega}) = -\\angle X(e^{-j\\omega})$。'
+            },
+            {
+                id: 3,
+                category: 'dtft',
+                categoryName: 'DTFT',
+                question: 'DTFT的时移性质：如果 $x[n] \\xrightarrow{\\text{DTFT}} X(e^{j\\omega})$，则 $x[n-n_0]$ 的DTFT是？',
+                options: [
+                    '$e^{j\\omega n_0} X(e^{j\\omega})$',
+                    '$e^{-j\\omega n_0} X(e^{j\\omega})$',
+                    '$X(e^{j(\\omega - n_0)})$',
+                    '$n_0 X(e^{j\\omega})$'
+                ],
+                correct: 1,
+                explanation: '时移性质：$x[n-n_0] \\xrightarrow{\\text{DTFT}} e^{-j\\omega n_0} X(e^{j\\omega})$。时域的延时对应频域的线性相移。'
+            },
+            {
+                id: 4,
+                category: 'dtft',
+                categoryName: 'DTFT',
+                question: '理想低通滤波器的频率响应为 $H(e^{j\\omega}) = \\begin{cases} 1, & |\\omega| < \\omega_c \\\\ 0, & \\omega_c < |\\omega| \\leq \\pi \\end{cases}$，其单位脉冲响应 $h[n]$ 的特点是？',
+                options: [
+                    'FIR（有限长）',
+                    'IIR（无限长）',
+                    '因果的',
+                    '只有有限个非零值'
+                ],
+                correct: 1,
+                explanation: '理想低通滤波器的单位脉冲响应为 $h[n] = \\frac{\\sin(\\omega_c n)}{\\pi n}$，这是一个无限长序列（IIR），且是非因果的。实际系统中需要近似实现。'
+            },
+            {
+                id: 5,
+                category: 'dtft',
+                categoryName: 'DTFT',
+                question: '卷积定理：如果 $y[n] = x[n] * h[n]$（卷积），则在频域中 $Y(e^{j\\omega})$ 等于？',
+                options: [
+                    '$X(e^{j\\omega}) + H(e^{j\\omega})$',
+                    '$X(e^{j\\omega}) \\cdot H(e^{j\\omega})$',
+                    '$X(e^{j\\omega}) * H(e^{j\\omega})$',
+                    '$X(e^{j\\omega}) / H(e^{j\\omega})$'
+                ],
+                correct: 1,
+                explanation: 'DTFT的卷积定理：时域卷积对应频域相乘。即 $y[n] = x[n] * h[n] \\xrightarrow{\\text{DTFT}} Y(e^{j\\omega}) = X(e^{j\\omega}) \\cdot H(e^{j\\omega})$。这是频域分析的重要基础。'
+            },
+            {
+                id: 6,
+                category: 'dfs',
+                categoryName: 'DFS',
+                question: '离散傅里叶级数(DFS)适用于什么类型的信号？',
+                options: [
+                    '任意离散信号',
+                    '周期离散信号',
+                    '能量有限信号',
+                    '因果信号'
+                ],
+                correct: 1,
+                explanation: 'DFS专门用于分析周期离散信号。对于周期为N的信号 $\\tilde{x}[n]$，DFS将其表示为N个复指数信号的线性组合：$\\tilde{x}[n] = \\sum_{k=0}^{N-1} X[k] e^{j(2\\pi/N)kn}$。'
+            },
+            {
+                id: 7,
+                category: 'dfs',
+                categoryName: 'DFS',
+                question: '对于周期为N的信号，其DFS系数 $X[k]$ 的周期是？',
+                options: [
+                    '$N/2$',
+                    '$N$',
+                    '$2N$',
+                    '非周期'
+                ],
+                correct: 1,
+                explanation: 'DFS系数 $X[k]$ 也是周期的，周期与原信号相同，都是N。即 $X[k+N] = X[k]$。这是DFS的对偶性质之一。'
+            },
+            {
+                id: 8,
+                category: 'dfs',
+                categoryName: 'DFS',
+                question: 'DFS的分析公式（从信号求系数）是？',
+                options: [
+                    '$X[k] = \\sum_{n=0}^{N-1} \\tilde{x}[n] e^{j(2\\pi/N)kn}$',
+                    '$X[k] = \\sum_{n=0}^{N-1} \\tilde{x}[n] e^{-j(2\\pi/N)kn}$',
+                    '$X[k] = \\frac{1}{N}\\sum_{n=0}^{N-1} \\tilde{x}[n] e^{-j(2\\pi/N)kn}$',
+                    '$X[k] = \\sum_{n=-\\infty}^{\\infty} \\tilde{x}[n] e^{-j(2\\pi/N)kn}$'
+                ],
+                correct: 2,
+                explanation: 'DFS分析公式（正变换）：$X[k] = \\frac{1}{N}\\sum_{n=0}^{N-1} \\tilde{x}[n] e^{-j(2\\pi/N)kn}$，其中 $1/N$ 是归一化因子，$k = 0, 1, ..., N-1$。'
+            },
+            {
+                id: 9,
+                category: 'dfs',
+                categoryName: 'DFS',
+                question: 'DFS与DTFT的关系是？',
+                options: [
+                    'DFS是DTFT的周期延拓',
+                    'DTFT是DFS的周期延拓',
+                    'DFS是DTFT在 $\\omega = 2\\pi k/N$ 处的采样',
+                    '两者没有关系'
+                ],
+                correct: 2,
+                explanation: '对于周期信号的一个周期，DFS系数 $X[k]$ 是该周期信号DTFT在频率 $\\omega_k = 2\\pi k/N$ 处的采样值（乘以归一化因子）。即 $X[k] = \\frac{1}{N} X(e^{j2\\pi k/N})$。'
+            },
+            {
+                id: 10,
+                category: 'ztransform',
+                categoryName: 'Z变换',
+                question: 'Z变换的定义式是？',
+                options: [
+                    '$X(z) = \\sum_{n=0}^{\\infty} x[n]z^{-n}$',
+                    '$X(z) = \\sum_{n=-\\infty}^{\\infty} x[n]z^{-n}$',
+                    '$X(z) = \\sum_{n=-\\infty}^{\\infty} x[n]e^{-zn}$',
+                    '$X(z) = \\int_{-\\infty}^{\\infty} x[n]z^{-n}dn$'
+                ],
+                correct: 1,
+                explanation: 'Z变换的双边定义：$X(z) = \\sum_{n=-\\infty}^{\\infty} x[n]z^{-n}$。对于因果序列（$n<0$时$x[n]=0$），可以简化为单边形式。'
+            },
+            {
+                id: 11,
+                category: 'ztransform',
+                categoryName: 'Z变换',
+                question: 'DTFT与Z变换的关系是？',
+                options: [
+                    'DTFT是Z变换在单位圆上的取值',
+                    'Z变换是DTFT的推广',
+                    '两者等价',
+                    '以上都对'
+                ],
+                correct: 3,
+                explanation: 'DTFT和Z变换密切相关：(1) DTFT是Z变换在单位圆 $z=e^{j\\omega}$ 上的取值；(2) Z变换将DTFT推广到复平面；(3) 当收敛域包含单位圆时，DTFT存在且等于 $X(e^{j\\omega})$。因此三个说法都正确。'
+            },
+            {
+                id: 12,
+                category: 'ztransform',
+                categoryName: 'Z变换',
+                question: '序列 $x[n] = a^n u[n]$ 的Z变换及其收敛域(ROC)是？',
+                options: [
+                    '$X(z) = \\frac{1}{1-az^{-1}}$, ROC: $|z| > |a|$',
+                    '$X(z) = \\frac{1}{1-az^{-1}}$, ROC: $|z| < |a|$',
+                    '$X(z) = \\frac{z}{z-a}$, ROC: $|z| < |a|$',
+                    '$X(z) = \\frac{a}{1-z^{-1}}$, ROC: $|z| > 1$'
+                ],
+                correct: 0,
+                explanation: '对于右边序列 $a^n u[n]$：$X(z) = \\sum_{n=0}^{\\infty} a^n z^{-n} = \\sum_{n=0}^{\\infty} (az^{-1})^n = \\frac{1}{1-az^{-1}}$，收敛条件为 $|az^{-1}| < 1$，即 $|z| > |a|$。'
+            },
+            {
+                id: 13,
+                category: 'ztransform',
+                categoryName: 'Z变换',
+                question: 'Z变换的时移性质：如果 $x[n] \\xrightarrow{\\mathcal{Z}} X(z)$，则 $x[n-n_0]$ 的Z变换是？',
+                options: [
+                    '$z^{n_0} X(z)$',
+                    '$z^{-n_0} X(z)$',
+                    '$e^{-jn_0} X(z)$',
+                    '$X(z-n_0)$'
+                ],
+                correct: 1,
+                explanation: 'Z变换的时移性质：$x[n-n_0] \\xrightarrow{\\mathcal{Z}} z^{-n_0} X(z)$。时域延时 $n_0$ 对应z域乘以 $z^{-n_0}$。这是求解差分方程的关键性质。'
+            },
+            {
+                id: 14,
+                category: 'ztransform',
+                categoryName: 'Z变换',
+                question: '已知系统函数 $H(z) = \\frac{1-0.5z^{-1}}{1-0.8z^{-1}}$，系统的零点和极点分别是？',
+                options: [
+                    '零点：$z=0.5$；极点：$z=0.8$',
+                    '零点：$z=0.8$；极点：$z=0.5$',
+                    '零点：$z=2$；极点：$z=1.25$',
+                    '零点：$z=-0.5$；极点：$z=-0.8$'
+                ],
+                correct: 0,
+                explanation: '零点是使分子为0的z值：$1-0.5z^{-1}=0 \\Rightarrow z=0.5$。极点是使分母为0的z值：$1-0.8z^{-1}=0 \\Rightarrow z=0.8$。注意零极点都在单位圆内，系统稳定。'
+            },
+            {
+                id: 15,
+                category: 'ztransform',
+                categoryName: 'Z变换',
+                question: '部分分式展开法主要用于求解Z变换的哪个问题？',
+                options: [
+                    '正变换',
+                    '逆变换',
+                    '收敛域',
+                    '零极点'
+                ],
+                correct: 1,
+                explanation: '部分分式展开是逆Z变换的重要方法。将有理分式 $X(z)$ 展开为简单分式之和，然后查表得到每一项对应的时域序列，最后求和得到 $x[n]$。'
+            },
+            {
+                id: 16,
+                category: 'system',
+                categoryName: '系统分析',
+                question: '因果稳定的LTI系统，其系统函数 $H(z)$ 的极点位置必须满足？',
+                options: [
+                    '在单位圆外',
+                    '在单位圆上',
+                    '在单位圆内',
+                    '在右半平面'
+                ],
+                correct: 2,
+                explanation: '因果稳定系统的充要条件是：所有极点在单位圆内，即 $|p_i| < 1$。如果极点在单位圆上或圆外，系统输出会出现持续振荡或发散，不稳定。'
+            },
+            {
+                id: 17,
+                category: 'system',
+                categoryName: '系统分析',
+                question: '差分方程 $y[n] - 0.5y[n-1] = x[n]$ 对应的系统函数 $H(z)$ 是？',
+                options: [
+                    '$H(z) = 1 - 0.5z^{-1}$',
+                    '$H(z) = \\frac{1}{1-0.5z^{-1}}$',
+                    '$H(z) = 0.5z^{-1}$',
+                    '$H(z) = \\frac{0.5}{1-z^{-1}}$'
+                ],
+                correct: 1,
+                explanation: '对差分方程两边取Z变换：$Y(z) - 0.5z^{-1}Y(z) = X(z)$，整理得 $Y(z)[1-0.5z^{-1}] = X(z)$，所以 $H(z) = \\frac{Y(z)}{X(z)} = \\frac{1}{1-0.5z^{-1}}$。'
+            },
+            {
+                id: 18,
+                category: 'system',
+                categoryName: '系统分析',
+                question: 'FIR（有限脉冲响应）滤波器的系统函数 $H(z)$ 的特点是？',
+                options: [
+                    '只有极点，无零点',
+                    '只有零点，无有限极点',
+                    '既有零点又有极点',
+                    '既无零点也无极点'
+                ],
+                correct: 1,
+                explanation: 'FIR滤波器的系统函数形式为 $H(z) = \\sum_{n=0}^{M} b_n z^{-n}$，这是一个多项式，只有零点，所有极点都在原点 $z=0$（无有限极点）。FIR系统总是稳定的。'
+            },
+            {
+                id: 19,
+                category: 'system',
+                categoryName: '系统分析',
+                question: '一个系统的极点位于 $z=0.9e^{j\\pi/4}$ 和 $z=0.9e^{-j\\pi/4}$，该系统的频率响应在哪个频率附近会有峰值？',
+                options: [
+                    '$\\omega = 0$',
+                    '$\\omega = \\pi/4$',
+                    '$\\omega = \\pi/2$',
+                    '$\\omega = \\pi$'
+                ],
+                correct: 1,
+                explanation: '极点位置决定频率响应的峰值位置。极点 $z=0.9e^{j\\pi/4}$ 在单位圆内，与单位圆上 $\\omega=\\pi/4$ 的点距离最近，因此频率响应在 $\\omega=\\pi/4$ 附近达到峰值。这是谐振现象。'
+            },
+            {
+                id: 20,
+                category: 'system',
+                categoryName: '系统分析',
+                question: '零点位于单位圆上某频率 $\\omega_0$ 处，则系统在该频率的响应是？',
+                options: [
+                    '达到最大值',
+                    '为零（完全衰减）',
+                    '为中间值',
+                    '不确定'
+                ],
+                correct: 1,
+                explanation: '零点使其所在频率的响应为零。当零点位于单位圆上 $z=e^{j\\omega_0}$ 时，该频率的响应 $H(e^{j\\omega_0})=0$，形成陷波效果。这是设计陷波滤波器的基本原理。'
+            }
+        ];
+
+        let questions = [];
+        let currentQuestion = 0;
+        let userAnswers = new Array(20).fill(null);
+        let submitted = false;
+        let studentInfo = { id: '', name: '' };
+
+        // 随机打乱数组
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        // 打乱题目选项
+        function shuffleQuestions() {
+            questions = originalQuestions.map(q => {
+                // 创建选项和索引的映射
+                const optionsWithIndex = q.options.map((option, index) => ({
+                    text: option,
+                    originalIndex: index
+                }));
+                
+                // 打乱选项
+                const shuffledOptions = shuffleArray(optionsWithIndex);
+                
+                // 找到正确答案在新顺序中的位置
+                const newCorrectIndex = shuffledOptions.findIndex(
+                    opt => opt.originalIndex === q.correct
+                );
+                
+                return {
+                    ...q,
+                    options: shuffledOptions.map(opt => opt.text),
+                    correct: newCorrectIndex
+                };
+            });
+        }
+
+        // 开始考试
+        function startExam() {
+            const studentId = document.getElementById('studentId').value.trim();
+            const studentName = document.getElementById('studentName').value.trim();
+            
+            if (!studentId || !studentName) {
+                alert('请填写完整的学号和姓名！');
+                return;
+            }
+            
+            studentInfo.id = studentId;
+            studentInfo.name = studentName;
+            
+            // 打乱题目选项
+            shuffleQuestions();
+            
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('examScreen').style.display = 'block';
+            
+            init();
+        }
+
+        // 初始化
+        function init() {
+            displayQuestion();
+            updateButtons();
+            updateProgress();
+        }
+
+        // 显示题目
+        function displayQuestion() {
+            const q = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            let html = `
+                <div class="question-card ${userAnswers[currentQuestion] !== null ? 'answered' : ''}">
+                    <div class="question-header">
+                        <span class="question-number">第 ${q.id} 题</span>
+                        <span class="question-category ${q.category}">${q.categoryName}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">
+            `;
+
+            q.options.forEach((option, index) => {
+                const selected = userAnswers[currentQuestion] === index ? 'selected' : '';
+                const label = String.fromCharCode(65 + index); // A, B, C, D
+                html += `
+                    <div class="option ${selected}" onclick="selectOption(${index})">
+                        <div class="option-label">${label}</div>
+                        <div class="option-text">${option}</div>
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <div class="explanation" id="explanation"></div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            
+            // 渲染数学公式
+            if (window.MathJax) {
+                MathJax.typesetPromise([container]).catch((err) => console.log(err));
+            }
+        }
+
+        // 选择选项
+        function selectOption(index) {
+            if (submitted) return;
+            userAnswers[currentQuestion] = index;
+            displayQuestion();
+            updateProgress();
+        }
+
+        // 提交答案
+        function submitAnswer() {
+            if (userAnswers[currentQuestion] === null) {
+                alert('请先选择一个答案！');
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            const userAnswer = userAnswers[currentQuestion];
+            const isCorrect = userAnswer === q.correct;
+
+            // 显示结果
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, index) => {
+                if (index === q.correct) {
+                    option.classList.add('correct');
+                } else if (index === userAnswer && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+                option.style.pointerEvents = 'none';
+            });
+
+            // 显示解析
+            const explanation = document.getElementById('explanation');
+            const icon = isCorrect ? '✓' : '✗';
+            const style = isCorrect ? 'color: #28a745;' : 'color: #dc3545;';
+            explanation.innerHTML = `
+                <h4><span style="${style}">${icon}</span> ${isCorrect ? '回答正确！' : '回答错误！'}</h4>
+                <p><strong>正确答案：</strong>${String.fromCharCode(65 + q.correct)}</p>
+                <p><strong>解析：</strong>${q.explanation}</p>
+            `;
+            explanation.classList.add('show');
+
+            // 渲染解析中的数学公式
+            if (window.MathJax) {
+                MathJax.typesetPromise([explanation]).catch((err) => console.log(err));
+            }
+
+            // 更新按钮
+            document.getElementById('submitBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            if (currentQuestion === questions.length - 1) {
+                document.getElementById('finishBtn').style.display = 'inline-block';
+                document.getElementById('nextBtn').style.display = 'none';
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+                updateButtons();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // 上一题
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+                updateButtons();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // 更新按钮状态
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('finishBtn').style.display = 'none';
+        }
+
+        // 更新进度
+        function updateProgress() {
+            const answered = userAnswers.filter(a => a !== null).length;
+            const progressBar = document.getElementById('progressBar');
+            const percentage = (answered / questions.length) * 100;
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = `${answered}/${questions.length} 已完成`;
+        }
+
+        // 完成考试
+        function finishExam() {
+            if (userAnswers.includes(null)) {
+                const unanswered = userAnswers.filter(a => a === null).length;
+                if (!confirm(`还有 ${unanswered} 题未作答，确定要提交吗？`)) {
+                    return;
+                }
+            }
+
+            submitted = true;
+            calculateResults();
+            document.getElementById('examScreen').style.display = 'none';
+            document.getElementById('resultPanel').classList.add('show');
+        }
+
+        // 计算结果
+        function calculateResults() {
+            let correctCount = 0;
+            let categoryScores = {
+                dtft: { correct: 0, total: 0 },
+                dfs: { correct: 0, total: 0 },
+                ztransform: { correct: 0, total: 0 },
+                system: { correct: 0, total: 0 }
+            };
+
+            questions.forEach((q, index) => {
+                const isCorrect = userAnswers[index] === q.correct;
+                if (isCorrect) correctCount++;
+
+                categoryScores[q.category].total++;
+                if (isCorrect) categoryScores[q.category].correct++;
+            });
+
+            const percentage = (correctCount / questions.length * 100).toFixed(1);
+
+            // 显示学生信息
+            document.getElementById('resultStudentId').textContent = studentInfo.id;
+            document.getElementById('resultStudentName').textContent = studentInfo.name;
+
+            // 显示总分
+            document.getElementById('resultScore').textContent = `${correctCount}/${questions.length}`;
+            document.getElementById('accuracyRate').textContent = percentage + '%';
+
+            // 评价
+            let message = '';
+            if (percentage >= 90) {
+                message = '🎉 优秀！你对这部分知识掌握得非常好！';
+            } else if (percentage >= 80) {
+                message = '👍 良好！继续保持，稍加巩固就能更好！';
+            } else if (percentage >= 70) {
+                message = '✓ 及格！基础还可以，需要加强练习！';
+            } else if (percentage >= 60) {
+                message = '⚠️ 刚及格，建议复习重点知识点！';
+            } else {
+                message = '❌ 需要努力！请认真复习课程内容！';
+            }
+            document.getElementById('resultMessage').textContent = message;
+
+            // 分类统计
+            document.getElementById('dtftScore').textContent = 
+                `${categoryScores.dtft.correct}/${categoryScores.dtft.total}`;
+            document.getElementById('dfsScore').textContent = 
+                `${categoryScores.dfs.correct}/${categoryScores.dfs.total}`;
+            document.getElementById('ztScore').textContent = 
+                `${categoryScores.ztransform.correct}/${categoryScores.ztransform.total}`;
+            document.getElementById('systemScore').textContent = 
+                `${categoryScores.system.correct}/${categoryScores.system.total}`;
+        }
+
+        // 显示详细回顾
+        function showReview() {
+            const reviewSection = document.getElementById('reviewSection');
+            const reviewContainer = document.getElementById('reviewContainer');
+            
+            let html = '';
+            questions.forEach((q, index) => {
+                const userAnswer = userAnswers[index];
+                const isCorrect = userAnswer === q.correct;
+                const statusClass = isCorrect ? 'correct' : 'wrong';
+                const statusText = isCorrect ? '✓ 正确' : '✗ 错误';
+                
+                html += `
+                    <div class="review-question">
+                        <div class="review-header">
+                            <div>
+                                <span class="question-number">第 ${q.id} 题</span>
+                                <span class="question-category ${q.category}">${q.categoryName}</span>
+                            </div>
+                            <span class="review-status ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="question-text">${q.question}</div>
+                        <div style="margin-top: 15px;">
+                            <p><strong>你的答案：</strong>${userAnswer !== null ? String.fromCharCode(65 + userAnswer) + '. ' + q.options[userAnswer] : '未作答'}</p>
+                            <p style="color: #28a745;"><strong>正确答案：</strong>${String.fromCharCode(65 + q.correct)}. ${q.options[q.correct]}</p>
+                        </div>
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                            <strong>📖 解析：</strong>${q.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+
+            reviewContainer.innerHTML = html;
+            reviewSection.style.display = 'block';
+
+            // 渲染数学公式
+            if (window.MathJax) {
+                MathJax.typesetPromise([reviewContainer]).catch((err) => console.log(err));
+            }
+
+            // 滚动到回顾区域
+            reviewSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+
+</body></html>
